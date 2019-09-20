@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Messenger</string>
+    <string name="messenger">MESSENGER</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="do_not_have_account">Don\'t have an account? Sign up here</string>
+    <string name="sign_up">NO ACCOUNT YET? SIGN UP NOW</string>
+    <string name="sign_up_title">Registration</string>
+    <string name="sign_up_slogan">Quick and easy.</string>
+    <string name="sign_up_surname">Surname</string>
+    <string name="sign_up_name">Name</string>
+    <string name="sign_up_gender">Gender</string>
+    <string name="sign_up_rb_male">Male</string>
+    <string name="sign_up_rb_female">Female</string>
+    <string name="sign_up_rb_other">Other</string>
+    <string name="sign_up_dob">Date of Birth</string>
+    <string name="phone">Phone number</string>
+    <string name="btn_sign_up">Register</string>
+</resources>

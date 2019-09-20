@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "840802786061",
+    "firebase_url": "https://message-101.firebaseio.com",
+    "project_id": "message-101",
+    "storage_bucket": "message-101.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:840802786061:android:5da62b083c20fd737e6e44",
+        "android_client_info": {
+          "package_name": "com.quockhanhng.tranning.messenger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "840802786061-vtoc1jdm172s5g7fhi9q4bio8gt0levt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwEm6PRyQYtniyVccokALqGnlv1S-uK-I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "840802786061-vtoc1jdm172s5g7fhi9q4bio8gt0levt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
