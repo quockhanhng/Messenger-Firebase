@@ -28,7 +28,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:drawable/editbox_background_normal"
-                    android:hint="Type your post"
+                    android:hint="@string/type_your_message"
                     android:inputType="textCapSentences|textNoSuggestions|textMultiLine"
                     android:maxLength="1000"
                     android:maxLines="6"
@@ -46,18 +46,19 @@
                 app:fabSize="mini"
                 android:tint="@android:color/white"
                 android:src="@android:drawable/ic_menu_send"
+                android:onClick="sendMessage"
         />
     </LinearLayout>
 
     <ProgressBar
-            android:id="@+id/loader"
+            android:id="@+id/progress_loader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
     />
 
     <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/list"
+            android:id="@+id/recyclerViewList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@id/inputLayout"
@@ -66,5 +67,6 @@
             android:layout_marginBottom="5dp"
             android:stackFromBottom="true"
             android:transcriptMode="normal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
     />
 </RelativeLayout>

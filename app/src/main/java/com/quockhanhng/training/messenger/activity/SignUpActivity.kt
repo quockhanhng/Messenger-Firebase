@@ -3,7 +3,6 @@ package com.quockhanhng.training.messenger.activity
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.DatePicker
@@ -11,7 +10,7 @@ import android.widget.Toast
 import androidx.core.app.NavUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
 import com.quockhanhng.training.messenger.R
 import com.quockhanhng.training.messenger.model.User
 import kotlinx.android.synthetic.main.activity_sign_up.*
@@ -20,6 +19,7 @@ import java.util.*
 class SignUpActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var database: FirebaseFirestore
 
     companion object {
         const val TAG = "SignUp Activity"
@@ -31,6 +31,7 @@ class SignUpActivity : AppCompatActivity() {
         actionBar?.setDisplayHomeAsUpEnabled(true)
 
         auth = FirebaseAuth.getInstance()
+        database = FirebaseFirestore.getInstance()
     }
 
     fun registration(v: View) {
@@ -68,17 +69,15 @@ class SignUpActivity : AppCompatActivity() {
                         getGenderFromRadioButtonId(sign_up_rg_gender.checkedRadioButtonId)
                     )
 
-                    FirebaseDatabase.getInstance().getReference("Users").child(user.uid).setValue(newUser)
-                        .addOnCompleteListener {
-                            if (it.isSuccessful) {
-                                Toast.makeText(baseContext, "Successful", Toast.LENGTH_SHORT).show()
-                                Timer().schedule(object : TimerTask() {
-                                    override fun run() {
-                                        NavUtils.navigateUpFromSameTask(this@SignUpActivity)
-                                    }
-                                }, 1000)
-                            }
+                    database.collection("users").document(auth.currentUser!!.uid).set(newUser)
+
+                    Toast.makeText(baseContext, "Successful", Toast.LENGTH_SHORT).show()
+                    Timer().schedule(object : TimerTask() {
+                        override fun run() {
+                            NavUtils.navigateUpFromSameTask(this@SignUpActivity)
                         }
+                    }, 1000)
+
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "createUserWithEmail:failure", task.exception)

@@ -17,4 +17,6 @@
     <string name="sign_up_dob">Date of Birth</string>
     <string name="phone">Phone number</string>
     <string name="btn_sign_up">Register</string>
+    <string name="type_your_message">Type your message</string>
+    <string name="username">username</string>
 </resources>

@@ -6,6 +6,7 @@ data class User(
     var email: String,
     var phoneNumber: String,
     var dob: String,
-    var gender: String
+    var gender: String,
+    var profileImgUrl: String? = null
 ) {
 }
