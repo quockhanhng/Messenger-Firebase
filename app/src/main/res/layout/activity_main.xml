@@ -37,13 +37,13 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btnSend"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.5"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:fabCustomSize="40dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:layout_marginTop="3dp"
-                app:fabSize="mini"
+                android:layout_marginStart="3dp"
                 android:tint="@android:color/white"
                 android:src="@android:drawable/ic_menu_send"
                 android:onClick="sendMessage"

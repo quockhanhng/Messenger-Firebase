@@ -13,12 +13,14 @@ import com.google.firebase.firestore.*
 import com.quockhanhng.training.messenger.R
 import com.quockhanhng.training.messenger.adapter.MessageAdapter
 import com.quockhanhng.training.messenger.model.Message
+import com.quockhanhng.training.messenger.model.User
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private var user: FirebaseUser? = null
+    private lateinit var myUser: User
     private lateinit var userId: String
     private lateinit var userName: String
     private lateinit var database: FirebaseFirestore
@@ -40,8 +42,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         userId = user?.uid.toString()
-        userName = user?.displayName.toString()
         database = FirebaseFirestore.getInstance()
+
+        val userRef = database.collection("users").document(userId)
+        userRef.get().addOnSuccessListener {
+            myUser = it.toObject(User::class.java)!!
+            userName = myUser.surname + " " + myUser.name
+        }
+
         query = database.collection("messages").orderBy("messageTime")
         query.addSnapshotListener { queryDocumentSnapshots, _ ->
             if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty) {
@@ -56,7 +64,7 @@ class MainActivity : AppCompatActivity() {
     fun sendMessage(v: View) {
         val message = input.text.toString()
         if (TextUtils.isEmpty(message)) {
-            Toast.makeText(this@MainActivity, "Post is post", Toast.LENGTH_LONG).show()
+            Toast.makeText(this@MainActivity, "Write something first", Toast.LENGTH_SHORT).show()
             return
         }
         database.collection("messages").add(Message(userName, message, userId, 0, null))
