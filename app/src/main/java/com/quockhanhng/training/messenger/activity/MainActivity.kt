@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
@@ -59,6 +61,23 @@ class MainActivity : AppCompatActivity() {
 
         adapter = MessageAdapter(query, userId, this@MainActivity)
         recyclerViewList.adapter = adapter
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_sign_out -> {
+                auth.signOut()
+                finish()
+                startActivity(Intent(this, LoginActivity::class.java))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     fun sendMessage(v: View) {
