@@ -56,7 +56,7 @@
                 android:textColorHint="#cccccc"
                 android:textColor="#000000"
                 android:maxLength="40"
-                android:inputType="textEmailAddress"
+                android:inputType="textWebEmailAddress|textEmailAddress|textEmailSubject"
                 android:background="@drawable/edit_text_shape"
                 android:singleLine="true"
                 tools:ignore="Autofill"
