@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.PopupMenu
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -76,7 +76,7 @@ class MessageAdapter(query: Query, private var userId: String, private var conte
         }
 
         imgLikes.setOnClickListener {
-            val callBack = context as MessageLikeClickListener
+            val callBack = context as MessageClickListener
 
             // Check if user has liked this message
             val status = callBack.onClickLike(model.messageId)
@@ -84,7 +84,21 @@ class MessageAdapter(query: Query, private var userId: String, private var conte
                 imgLikes.setImageResource(R.drawable.ic_favorite_black_24dp)
             } else if (status == 0) {
                 imgLikes.setImageResource(R.drawable.ic_favorite_red_24dp)
-            } else Toast.makeText(context, "Something wrong", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        imgDropdown.setOnClickListener {
+
+            val popUpMenu = PopupMenu(context, imgDropdown)
+            popUpMenu.menuInflater.inflate(R.menu.message_popup_menu, popUpMenu.menu)
+            popUpMenu.setOnMenuItemClickListener {
+                if (it.itemId == R.id.mi_delete_message) {
+                    val callBack = context as MessageClickListener
+                    callBack.onClickDropdownButton(model.messageId)
+                }
+                true
+            }
+            popUpMenu.show()
         }
 
         Glide.with(context)
@@ -103,7 +117,8 @@ class MessageAdapter(query: Query, private var userId: String, private var conte
         var imgLikes: ImageView = itemView.findViewById(R.id.imgLikes)
     }
 
-    interface MessageLikeClickListener {
+    interface MessageClickListener {
         fun onClickLike(id: String): Int
+        fun onClickDropdownButton(id: String)
     }
 }

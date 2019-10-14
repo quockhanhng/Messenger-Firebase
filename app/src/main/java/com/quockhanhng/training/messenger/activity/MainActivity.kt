@@ -22,7 +22,7 @@ import com.quockhanhng.training.messenger.model.Message
 import com.quockhanhng.training.messenger.model.User
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), MessageAdapter.MessageLikeClickListener {
+class MainActivity : AppCompatActivity(), MessageAdapter.MessageClickListener {
 
     private lateinit var rootLayout: DrawerLayout
     private lateinit var drawerToggle: ActionBarDrawerToggle
@@ -184,5 +184,19 @@ class MainActivity : AppCompatActivity(), MessageAdapter.MessageLikeClickListene
         }
 
         return status
+    }
+
+    override fun onClickDropdownButton(id: String) {
+        val docRef = database.collection("messages").document(id)
+        docRef.get().addOnSuccessListener { documentSnapshot ->
+            val message = documentSnapshot.toObject(Message::class.java)!!
+
+            // If user is the owner of the message
+            if (message.messageUserId == myUser.userId)
+                docRef
+                    .delete()
+                    .addOnCompleteListener { Log.d("LOG", "Message successfully deleted!") }
+                    .addOnFailureListener { Log.w("LOG", "Error deleting message", it) }
+        }
     }
 }
