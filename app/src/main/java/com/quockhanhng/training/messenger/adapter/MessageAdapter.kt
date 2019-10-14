@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -67,11 +68,23 @@ class MessageAdapter(query: Query, private var userId: String, private var conte
         mTime.text = DateFormat.format("dd MMM  (h:mm a)", model.messageTime)
         mLikesCount.text = model.messageLikesCount.toString()
         if (model.messageLikes != null) {
-            if ((model.messageLikes!!).containsKey(userId)) {
+            if ((model.messageLikes!!).contains(userId)) {
                 imgLikes.setImageResource(R.drawable.ic_favorite_red_24dp)
             } else {
                 imgLikes.setImageResource(R.drawable.ic_favorite_black_24dp)
             }
+        }
+
+        imgLikes.setOnClickListener {
+            val callBack = context as MessageLikeClickListener
+
+            // Check if user has liked this message
+            val status = callBack.onClickLike(model.messageId)
+            if (status == 1) {
+                imgLikes.setImageResource(R.drawable.ic_favorite_black_24dp)
+            } else if (status == 0) {
+                imgLikes.setImageResource(R.drawable.ic_favorite_red_24dp)
+            } else Toast.makeText(context, "Something wrong", Toast.LENGTH_SHORT).show()
         }
 
         Glide.with(context)
@@ -88,5 +101,9 @@ class MessageAdapter(query: Query, private var userId: String, private var conte
         var imgProfile: CircleImageView = itemView.findViewById(R.id.imgDps)
         var imgDropdown: ImageView = itemView.findViewById(R.id.imgDropdown)
         var imgLikes: ImageView = itemView.findViewById(R.id.imgLikes)
+    }
+
+    interface MessageLikeClickListener {
+        fun onClickLike(id: String): Int
     }
 }

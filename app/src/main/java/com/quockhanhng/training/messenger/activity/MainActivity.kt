@@ -5,6 +5,7 @@ import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
@@ -21,7 +22,7 @@ import com.quockhanhng.training.messenger.model.Message
 import com.quockhanhng.training.messenger.model.User
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MessageAdapter.MessageLikeClickListener {
 
     private lateinit var rootLayout: DrawerLayout
     private lateinit var drawerToggle: ActionBarDrawerToggle
@@ -116,7 +117,16 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this@MainActivity, "Write something first", Toast.LENGTH_SHORT).show()
             return
         }
-        database.collection("messages").add(Message(userName, message, userId, 0, null))
+
+        val newMessage = Message("", userName, message, userId, 0)
+        database.collection("messages").add(newMessage)
+            .addOnSuccessListener {
+                newMessage.messageId = it.id
+
+                database.collection("messages").document(newMessage.messageId).set(newMessage)
+            }
+        Log.d("Message", newMessage.messageId)
+
         adapter?.notifyDataSetChanged()
         input.setText("")
         recyclerViewList.smoothScrollToPosition(adapter?.itemCount!! + 1)
@@ -146,5 +156,33 @@ class MainActivity : AppCompatActivity() {
         auth.signOut()
         finish()
         startActivity(Intent(this, LoginActivity::class.java))
+    }
+
+    override fun onClickLike(id: String): Int {
+        var status = -1
+
+        val docRef = database.collection("messages").document(id)
+        docRef.get().addOnSuccessListener { documentSnapshot ->
+            val message = documentSnapshot.toObject(Message::class.java)!!
+
+            if (message.messageLikes == null)
+                message.messageLikes = ArrayList()
+
+            // Check if user has liked this message
+            if (message.messageLikes!!.contains(myUser.userId)) {
+                status = 0
+                message.messageLikes!!.remove(myUser.userId)
+                message.messageLikesCount--
+            } else {
+                status = 1
+                message.messageLikes!!.add(myUser.userId)
+                message.messageLikesCount++
+            }
+
+            // Update status
+            docRef.set(message)
+        }
+
+        return status
     }
 }

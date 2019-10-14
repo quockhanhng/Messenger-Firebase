@@ -61,6 +61,7 @@ class SignUpActivity : AppCompatActivity() {
                     val user: FirebaseUser = auth.currentUser!!
 
                     val newUser = User(
+                        user.uid,
                         sign_up_surname.text.toString(),
                         sign_up_name.text.toString(),
                         sign_up_email.text.toString(),
@@ -69,7 +70,7 @@ class SignUpActivity : AppCompatActivity() {
                         getGenderFromRadioButtonId(sign_up_rg_gender.checkedRadioButtonId)
                     )
 
-                    database.collection("users").document(auth.currentUser!!.uid).set(newUser)
+                    database.collection("users").document(user.uid).set(newUser)
 
                     Toast.makeText(baseContext, "Successful", Toast.LENGTH_SHORT).show()
                     Timer().schedule(object : TimerTask() {

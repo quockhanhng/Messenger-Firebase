@@ -1,6 +1,7 @@
 package com.quockhanhng.training.messenger.model
 
 data class User(
+    var userId: String = "",
     var surname: String = "",
     var name: String = "",
     var email: String = "",
