@@ -41,7 +41,12 @@ class MainActivity : AppCompatActivity(), MessageAdapter.MessageClickListener {
 
         rootLayout = findViewById(R.id.rootLayout)
         drawerToggle =
-            ActionBarDrawerToggle(this, rootLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+            ActionBarDrawerToggle(
+                this,
+                rootLayout,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close
+            )
         rootLayout.addDrawerListener(drawerToggle)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -50,7 +55,8 @@ class MainActivity : AppCompatActivity(), MessageAdapter.MessageClickListener {
 
         drawerToggle.syncState()
 
-        navigation_menu.setNavigationItemSelectedListener(object : NavigationView.OnNavigationItemSelectedListener {
+        navigation_menu.setNavigationItemSelectedListener(object :
+            NavigationView.OnNavigationItemSelectedListener {
             override fun onNavigationItemSelected(item: MenuItem): Boolean {
                 when (item.itemId) {
                     R.id.mi_account -> goToProfileAccount()
@@ -146,6 +152,9 @@ class MainActivity : AppCompatActivity(), MessageAdapter.MessageClickListener {
 
     private fun goToProfileAccount() {
         Toast.makeText(this, "Profile Account", Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, ProfileActivity::class.java)
+        intent.putExtra("CurrentUser", myUser)
+        startActivity(intent)
     }
 
     private fun goToSettings() {

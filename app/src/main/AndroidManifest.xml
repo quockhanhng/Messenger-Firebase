@@ -11,21 +11,23 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-
+        <activity
+                android:name=".activity.ProfileActivity"
+                android:parentActivityName=".activity.MainActivity"
+                android:screenOrientation="portrait">
+        </activity>
         <activity
                 android:name=".activity.LoginActivity"
                 android:screenOrientation="portrait"
                 android:theme="@style/MyMaterialTheme"
                 android:windowSoftInputMode="stateHidden">
         </activity>
-
         <activity
                 android:name=".activity.SignUpActivity"
                 android:parentActivityName=".activity.LoginActivity"
                 android:screenOrientation="portrait"
                 android:theme="@style/AppTheme">
         </activity>
-
         <activity
                 android:name=".activity.MainActivity"
                 android:screenOrientation="portrait"
@@ -37,6 +39,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
     </application>
+
 </manifest>
