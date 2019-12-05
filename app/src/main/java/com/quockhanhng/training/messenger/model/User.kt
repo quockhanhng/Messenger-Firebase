@@ -10,6 +10,7 @@ data class User(
     var phoneNumber: String = "",
     var dob: String = "",
     var gender: String = "",
-    var profileImgUrl: String? = null
+    var profileImgUrl: String? = null,
+    var friends: HashMap<String, Long> = HashMap()
 ) : Serializable {
 }
